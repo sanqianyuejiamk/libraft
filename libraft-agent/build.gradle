@@ -46,7 +46,3 @@ dependencies {
     runtime 'org.hibernate:hibernate-validator-cdi:5.0.1.Final'
 }
 
-javadoc {
-    def libraftCoreDocsDir = project(':libraft-core').docsDir
-    options.linksOffline "${libraftJavadocUrl}/libraft-core/${canonicalVersion}", "${libraftCoreDocsDir}/javadoc"
-}

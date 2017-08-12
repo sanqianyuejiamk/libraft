@@ -38,13 +38,7 @@ dependencies {
     runtime 'org.xerial:sqlite-jdbc:3.7.2'
 }
 
-javadoc {
-    def libraftCoreDocsDir = project(':libraft-core').docsDir
-    options.linksOffline "${libraftJavadocUrl}/libraft-core/${canonicalVersion}", "${libraftCoreDocsDir}/javadoc"
 
-    def libraftAgentDocsDir = project(':libraft-agent').docsDir
-    options.linksOffline "${libraftJavadocUrl}/libraft-agent/${canonicalVersion}", "${libraftAgentDocsDir}/javadoc"
-}
 
 jar {
     manifest {

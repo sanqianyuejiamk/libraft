@@ -69,8 +69,7 @@ ext {
     canonicalVersion = version.minus('-SNAPSHOT')
     isReleaseVersion = !version.endsWith('SNAPSHOT')
 
-    // directories
-    consolidatedJavadocDir = "${rootDir}/javadoc"
+
 
     // default maven credentials
     // it's safe to set defaults here because any values
@@ -159,14 +158,10 @@ subprojects {
         classifier = 'sources'
     }
 
-    task javadocJar(type: Jar, description: "Assembles a jar archive containing the javadoc files", dependsOn: javadoc) {
-        from "$docsDir"
-        classifier = 'javadoc'
-    }
 
     // add the source and javadoc jars to the list of resulting artifacts
     artifacts {
-        archives sourceJar, javadocJar
+        archives sourceJar
     }
 
     // sign all the artifacts for non-snapshot versions
@@ -251,23 +246,7 @@ subprojects {
 
     // FIXME (AG): there is probably a more idiomatic gradle way to define syncDocs and deleteDocs globally
 
-    // this task definition has to be inside the "subprojects" closure
-    // since it refers to project-specific properties such as docsDir and project.name
-    task syncDocs(type: Sync, description: "Copies generated javadoc to the consolidated gh-pages javadoc directory", dependsOn: javadoc) {
-        from "${docsDir}/javadoc"
-        into "${consolidatedJavadocDir}/${project.name}/${canonicalVersion}"
-    }
 
-    // this task definition has to be inside the "subprojects" closure
-    // because "clean" (below) refers to it
-    task deleteDocs(type: Delete, description: "Deletes the consolidated gh-pages javadoc directory") {
-        delete consolidatedJavadocDir
-    }
-
-    // also delete the consolidated javadoc dir when clean is called
-    clean {
-        dependsOn deleteDocs
-    }
 }
 
 //
